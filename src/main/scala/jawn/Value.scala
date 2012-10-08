@@ -1,7 +1,6 @@
 package jawn
 
-import debox.buffer._
-import debox.map._
+import scala.collection.mutable
 
 sealed trait Value { def j: String }
 
@@ -23,7 +22,7 @@ case class DeferNum(s: String) extends Value { def j = s } //lol
 
 sealed trait Container extends Value
 
-case class Arr(vs: Buffer[Value]) extends Container {
+case class Arr(vs: mutable.ArrayBuffer[Value]) extends Container {
   def j = if (vs.length == 0) {
     "[]"
   } else {
@@ -33,13 +32,13 @@ case class Arr(vs: Buffer[Value]) extends Container {
   }
 }
 
-case class Obj(vs: Map[String, Value]) extends Container {
-  def j = if (vs.length == 0) {
+case class Obj(vs: mutable.Map[String, Value]) extends Container {
+  def j = if (vs.size == 0) {
     "{}"
   } else {
     val sb = new StringBuilder().append("[")
     vs.foreach {
-      (k, v) => sb.append("\"" + k + "\": ").append(v.j).append(", ")
+      case (k, v) => sb.append("\"" + k + "\": ").append(v.j).append(", ")
     }
     sb.dropRight(2).append("}").toString
   }

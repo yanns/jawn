@@ -10,9 +10,6 @@ import java.lang.Long.parseLong
 import java.io.FileInputStream
 import java.nio.ByteBuffer
 
-import debox.buffer.Mutable
-
-
 /**
  * Parser contains the state machine that does all the work. The only 
  */
@@ -399,15 +396,13 @@ final class StringParser(s: String) extends Parser {
    * multi-char code point incorrectly.
    */
   final def parseString(i: Int, ctxt: Context): Int = {
-    if (at(i) != '"') sys.error("argh")
-    var j = i + 1
-
-    val k = parseStringSimple(j, ctxt)
+    val k = parseStringSimple(i + 1, ctxt)
     if (k != -1) {
       ctxt.add(at(i + 1, k - 1))
       return k
     }
 
+    var j = i + 1
     val sb = new CharBuilder
       
     var c = at(j)
@@ -595,15 +590,13 @@ final class PathParser(name: String) extends Parser {
    * This method expects the data to be in UTF-8 and accesses it as bytes.
    */
   final def parseString(i: Int, ctxt: Context): Int = {
-    if (at(i) != 34) sys.error("argh")
-    var j = i + 1
-
-    val k = parseStringSimple(j, ctxt)
+    val k = parseStringSimple(i + 1, ctxt)
     if (k != -1) {
       ctxt.add(at(i + 1, k - 1))
       return k
     }
 
+    var j = i + 1
     val sb = new CharBuilder
       
     var c = byte(j)

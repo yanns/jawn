@@ -1,7 +1,6 @@
 package jawn
 
-import debox.buffer._
-import debox.map._
+import scala.collection.mutable
 
 sealed trait Context {
   def add(s: String): Unit
@@ -11,7 +10,7 @@ sealed trait Context {
 }
 
 final class ArrContext extends Context {
-  private val vs = Mutable.empty[Value]
+  private val vs = mutable.ArrayBuffer.empty[Value]
 
   def add(s: String): Unit = vs.append(Str(s))
   def add(v: Value): Unit = vs.append(v)
@@ -20,9 +19,8 @@ final class ArrContext extends Context {
 }
 
 final class ObjContext extends Context {
-  implicit val u = debox.Unset.Implicits.anyrefHasNullUnset[String]
   private var key: String = null
-  private val vs = Map.empty[String, Value]
+  private val vs = mutable.Map.empty[String, Value]
 
   def add(s: String): Unit = if (key == null) {
     key = s

@@ -5,20 +5,15 @@ object MyBuild extends Build {
   override lazy val settings = super.settings ++ Seq(
     name := "jawn",
     version := "0.0.1",
-    scalaVersion := "2.10.0-M7",
+    scalaVersion := "2.9.2",
 
     scalacOptions ++= Seq(
-      "-Yinline-warnings",
       "-deprecation",
       "-optimize",
       "-unchecked"
     ),
 
-    libraryDependencies ++= Seq(
-      "org.scala-lang" % "scala-reflect" % "2.10.0-M7",
-      "org.scalatest" % "scalatest_2.10.0-M7" % "1.9-2.10.0-M7-B1" % "test",
-      "debox" % "debox" % "0.1.0" from "http://plastic-idolatry.com/jars/debox_2.10.0-M7-0.1.0.jar"
-    )
+    libraryDependencies ++= Seq()
   )
 
   val key = AttributeKey[Boolean]("javaOptionsPatched")
