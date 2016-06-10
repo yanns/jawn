@@ -9,8 +9,8 @@ object Parser extends SupportParser[JValue] {
   implicit val facade: Facade[JValue] =
     new Facade[JValue] {
       def jnull() = JNull
-      def jfalse() = JBool(false)
-      def jtrue() = JBool(true)
+      def jfalse() = JBool.False
+      def jtrue() = JBool.True
       def jnum(s: String) = JDouble(java.lang.Double.parseDouble(s))
       def jint(s: String) = JDouble(java.lang.Double.parseDouble(s))
       def jstring(s: String) = JString(s)
